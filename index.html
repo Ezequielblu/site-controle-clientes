@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezetech - Controle de Clientes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>Ezetech</h1>
+                <div class="totals">
+                    <span id="totalBruto">Valor Bruto: R$ 0,00</span>
+                    <span id="totalLimpo">Valor Limpo: R$ 0,00</span>
+                </div>
+            </div>
+            <div class="header-content">
+                <nav>
+                    <a href="admin.html" class="back-button">Admin</a>
+                </nav>
+                <div class="search-filter">
+                    <input type="text" id="searchInput" placeholder="Pesquisar por nome..." onkeyup="filterClients()">
+                    <select id="filterSelect" onchange="applyFilters()">
+                        <option value="none">Filtrar por...</option>
+                        <option value="newest">Mais recentes</option>
+                        <option value="warranty">Mais próximos de vencer</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+    <main>
+        <section id="clientList" class="client-list">
+            <!-- Lista de clientes vai aqui -->
+        </section>
+
+        <section id="clientDetails" class="client-details">
+            <button id="closeDetails" class="close-button">Fechar</button>
+            <!-- Detalhes do cliente selecionado -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+            <p>&copy; 2025 Ezetech - Todos os direitos reservados</p>
+            <nav>
+                <a href="about.html">Sobre Nós</a>
+                <a href="privacy.html">Política de Privacidade</a>
+                <a href="contact.html">Contato</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 

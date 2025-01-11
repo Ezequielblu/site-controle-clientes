@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Adicionar Cliente</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="footer.css">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <h1>Ezetech - Administração</h1>
+            </div>
+            <nav>
+                <a href="index.html" class="back-button">Página Inicial</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content" style="display: none;">
+        <div id="addClientForm" class="form-container">
+            <h2>Adicionar Cliente</h2>
+            <form id="clientForm">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" required>
+
+                <label for="data_instalacao">Data de Instalação:</label>
+                <input type="date" id="data_instalacao" required>
+
+                <label for="garantia_inicio">Início da Garantia:</label>
+                <input type="date" id="garantia_inicio" required>
+
+                <label for="endereco">Endereço:</label>
+                <input type="text" id="endereco" required>
+
+                <label for="contrato_url">URL do Contrato:</label>
+                <input type="url" id="contrato_url" required>
+
+                <label for="valor_bruto">Valor Bruto: <br>Utilize o formato:R$ 1.000</label>
+                <input type="text" id="valor_bruto" required>
+
+                <label for="valor_limpo">Valor Limpo:</label>
+                <input type="text" id="valor_limpo" required>
+
+                <button type="submit">Adicionar Cliente</button>
+            </form>
+
+            <button id="downloadJsonButton" style="display: none;" onclick="downloadJson()">Baixar JSON Atualizado</button>
+        </div>
+    </main>
+
+    <div id="login-form" class="login-container">
+        <h2>Login de Administrador</h2>
+        <form id="loginForm">
+            <label for="username">Usuário:</label>
+            <input type="text" id="username" required>
+
+            <label for="password">Senha:</label>
+            <input type="password" id="password" required>
+
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Ezetech - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="admin.js"></script>
+</body>
+</html>
