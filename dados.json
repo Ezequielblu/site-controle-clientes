@@ -8,7 +8,6 @@
     "valor_bruto": "R$ 3.400",
     "valor_limpo": "R$ 1.400"
   },
-
   {
     "nome": "Lucelia Rodrigues Dourado - 16 cameras",
     "data_instalacao": "2024-08-20",
@@ -17,5 +16,14 @@
     "contrato_url": "https://i.ibb.co/C7w6pKn/7.png",
     "valor_bruto": "R$ 3.500",
     "valor_limpo": "R$ 1.400"
+  },
+  {
+    "nome": "Julia Graziela Schmidt - 4 cameras",
+    "data_instalacao": "2024-09-21",
+    "garantia_inicio": "2024-09-21",
+    "endereco": "Rua Jordão 393 Cep 89027717",
+    "contrato_url": " https://ezetechblumenau.netlify.app/admin.png",
+    "valor_bruto": "R$ 1.700",
+    "valor_limpo": "R$ 900"
   }
 ]
