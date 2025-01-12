@@ -5,57 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ezetech - Controle de Clientes</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="footer.css">
 </head>
 <body>
+
     <header>
-        <div class="header-container">
-            <div class="logo">
-                <h1>Ezetech</h1>
-                <div class="totals">
-                    <span id="totalBruto">Valor Bruto: R$ 0,00</span>
-                    <span id="totalLimpo">Valor Limpo: R$ 0,00</span>
-                </div>
+        <div class="header-left">
+            <img src="logo.png" alt="Ezetech" id="logo"> <!-- Logo -->
+            <div id="totals">
+                <div id="totalBruto">Valor Bruto: R$ 0,00</div>
+                <div id="totalLimpo">Valor Limpo: R$ 0,00</div>
             </div>
-            <div class="header-content">
-                <nav>
-                    <a href="admin.html" class="back-button">Admin</a>
-                </nav>
-                <div class="search-filter">
-                    <input type="text" id="searchInput" placeholder="Pesquisar por nome..." onkeyup="filterClients()">
-                    <select id="filterSelect" onchange="applyFilters()">
-                        <option value="none">Filtrar por...</option>
-                        <option value="newest">Mais recentes</option>
-                        <option value="warranty">Mais próximos de vencer</option>
-                    </select>
-                </div>
+        </div>
+        <div id="header-controls">
+            <div id="search-container">
+                <input type="text" id="searchInput" placeholder="Pesquisar cliente...">
             </div>
+            <div id="filters">
+                <label for="filterSelect">Filtrar:</label>
+                <select id="filterSelect">
+                    <option value="">Selecione...</option>
+                    <option value="installationRecent">Instalação Mais Recente</option>
+                    <option value="warrantyExpiring">Garantia Mais Perto de Vencer</option>
+                </select>
+            </div>
+            <a href="admin.html" id="adminButton">Admin</a>
         </div>
     </header>
-    
 
-    <main>
-        <section id="clientList" class="client-list">
-            <!-- Lista de clientes vai aqui -->
-        </section>
+<main>
+    <div id="clientList"></div>
 
-        <section id="clientDetails" class="client-details">
-            <button id="closeDetails" class="close-button">Fechar</button>
-            <!-- Detalhes do cliente selecionado -->
-        </section>
-    </main>
-
-    <footer>
-        <div class="footer-container">
-            <p>&copy; 2025 Ezetech - Todos os direitos reservados</p>
-            <nav>
-                <a href="about.html">Sobre Nós</a>
-                <a href="privacy.html">Política de Privacidade</a>
-                <a href="contact.html">Contato</a>
-            </nav>
+    <div id="clientDetails" class="modal">
+        <div id="clientDetailsContent" class="modal-content">
+            <!-- Detalhes do cliente serão inseridos aqui -->
         </div>
-    </footer>
+    </div>
+</main>
 
-    <script src="script.js"></script>
+<footer>
+    <p>&copy; 2025 Ezetech - Todos os direitos reservados</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
-</html> 
+</html>
