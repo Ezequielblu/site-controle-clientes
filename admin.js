@@ -39,9 +39,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Adicionar cliente
     document.getElementById('clientForm').addEventListener('submit', function(event) {
         event.preventDefault();
-
+    
+        const numeroWhatsApp = document.getElementById('whatsapp').value.trim();
+        const urlWhatsApp = `https://wa.me/55${numeroWhatsApp}`;
+    
         const novoCliente = {
             nome: document.getElementById('nome').value,
+            WhatsApp: urlWhatsApp,
             data_instalacao: document.getElementById('data_instalacao').value,
             garantia_inicio: document.getElementById('garantia_inicio').value,
             endereco: document.getElementById('endereco').value,
@@ -49,12 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
             valor_bruto: document.getElementById('valor_bruto').value,
             valor_limpo: document.getElementById('valor_limpo').value
         };
-
+    
         clients.push(novoCliente);
         alert('Cliente adicionado com sucesso!');
         document.getElementById('downloadJsonButton').style.display = 'block';
         document.getElementById('clientForm').reset();
     });
+    
 
     // Baixar JSON
     function downloadJson() {
