@@ -90,31 +90,30 @@ fetch('dados.json')
 // Função para exibir os detalhes do cliente sobre o cliente clicado
 // Função para exibir os detalhes do cliente
 function showClientDetails(client) {
-    // Criar o overlay
     const clientDetailsOverlay = document.createElement("div");
     clientDetailsOverlay.classList.add("client-details-overlay");
 
-    // Criar o conteúdo do cliente
     const detailsContent = `
-    <div class="client-details-content">
-        <h2>Detalhes de ${client.nome}</h2>
-        <p><strong>Data de Instalação:</strong> ${formatDate(client.data_instalacao)}</p>
-        <p><strong>Início da Garantia:</strong> ${formatDate(client.garantia_inicio)}</p>
-        <p><strong>Endereço:</strong> ${client.endereco}</p>
-        <p><strong>Contrato:</strong> <a href="${client.contrato_url}" target="_blank">Visualizar Contrato</a></p>
-        <p><strong>Tempo de Instalação:</strong> ${calculateTimeSince(client.data_instalacao)}</p>
-        <p><strong>Status da Garantia:</strong> ${calculateWarrantyStatus(client.garantia_inicio).text}</p>
-        <p><strong>Valor Bruto:</strong> ${client.valor_bruto}</p>
-        <p><strong>Valor Limpo:</strong> ${client.valor_limpo}</p>
-        <button class="close-button" onclick="closeClientDetails()">Fechar</button>
-    </div>
-`;
-
+        <div class="client-details-content">
+            <h2>Detalhes de ${client.nome}</h2>
+            <p><strong>Data de Instalação:</strong> ${formatDate(client.data_instalacao)}</p>
+            <p><strong>Início da Garantia:</strong> ${formatDate(client.garantia_inicio)}</p>
+            <p><strong>Endereço:</strong> ${client.endereco}</p>
+            <p><strong>Contrato:</strong> <a href="${client.contrato_url}" target="_blank">Visualizar Contrato</a></p>
+            <p><strong>Tempo de Instalação:</strong> ${calculateTimeSince(client.data_instalacao)}</p>
+            <p><strong>Status da Garantia:</strong> ${calculateWarrantyStatus(client.garantia_inicio).text}</p>
+            <p><strong>Valor Bruto:</strong> ${client.valor_bruto}</p>
+            <p><strong>Valor Limpo:</strong> ${client.valor_limpo}</p>
+            <p><strong>WhatsApp:</strong> <a href="${client.WhatsApp}" target="_blank">Clique aqui para abrir no WhatsApp</a></p>
+            <button class="close-button" onclick="closeClientDetails()">Fechar</button>
+        </div>
+    `;
 
     clientDetailsOverlay.innerHTML = detailsContent;
     document.body.appendChild(clientDetailsOverlay);
-    document.body.style.overflow = "hidden"; // Desativar scroll ao abrir os detalhes
+    document.body.style.overflow = "hidden"; // Evitar scroll
 }
+
 
 function closeClientDetails() {
     const clientDetailsOverlay = document.querySelector(".client-details-overlay");
