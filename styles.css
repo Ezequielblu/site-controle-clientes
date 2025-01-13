@@ -1,253 +1,195 @@
-/* Resetando estilo */  
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+let clients = [];  // Armazenar os clientes carregados
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #0d0d0d;
-    color: white;
-}
+// Função para calcular o tempo em anos e dias desde uma data
+// Função para calcular o tempo em anos e dias desde uma data
+function calculateTimeSince(date) {
+    const startDate = new Date(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorar horas para cálculos precisos
+    if (isNaN(startDate)) return "Data inválida";
 
-/* Header */
-header {
-    background: linear-gradient(90deg, #e50914, #000);
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-}
+    const diffTime = today - startDate;
+    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Total de dias
 
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
+    const years = Math.floor(totalDays / 365); // Anos inteiros
+    const days = totalDays % 365; // Dias restantes
 
-#logo {
-    width: 120px;
-}
-
-#totals {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-#totals div {
-    font-size: 1em;
-}
-
-/* Layout do header controls */
-#header-controls {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-/* Estilo dos elementos do header */
-#filters,
-#search-container,
-#adminButton {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #1a1a1a;
-    border-radius: 5px;
-    padding: 10px 15px;
-    min-width: 200px;
-    height: 50px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-#filters label {
-    margin-right: 10px;
-    color: white;
-    font-size: 1em;
-}
-
-#filters select {
-    background-color: #333;
-    color: white;
-    border: none;
-    outline: none;
-    padding: 5px;
-    border-radius: 5px;
-    font-size: 1em;
-    flex: 1;
-}
-
-#searchInput {
-    background-color: #333;
-    color: white;
-    border: none;
-    outline: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 1em;
-    flex: 1;
-}
-
-#searchInput::placeholder {
-    color: #ccc;
-}
-
-#adminButton {
-    text-decoration: none;
-    color: white;
-    background: linear-gradient(90deg, #e50914, #000);
-    border: 2px solid #e50914;
-    text-align: center;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-#adminButton:hover {
-    background-color: #e50914;
-    border-color: white;
-}
-
-/* Estilo geral para responsividade */
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        align-items: stretch;
+    let result = `${years} ano${years !== 1 ? 's' : ''}`;
+    if (days > 0) {
+        result += ` e ${days} dia${days !== 1 ? 's' : ''}`;
     }
+    
+    return result;
+}
 
-    .header-left,
-    #header-controls {
-        width: 100%;
-        justify-content: center;
-    }
+// Função para calcular o status da garantia
+function calculateWarrantyStatus(garantiaInicio) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorar horas para cálculos precisos
+    const startWarrantyDate = new Date(garantiaInicio);
 
-    #filters,
-    #search-container,
-    #adminButton {
-        width: 100%;
+    if (isNaN(startWarrantyDate)) return { status: 'red', text: 'Data inválida' };
+
+    const warrantyDuration = 365; // Garantia padrão em dias
+    const diffTime = today - startWarrantyDate;
+    const daysSinceWarrantyStart = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const daysLeft = warrantyDuration - daysSinceWarrantyStart;
+
+    if (daysLeft > 0) {
+        return { status: 'green', text: `${daysLeft} dia${daysLeft !== 1 ? 's' : ''} restantes` };
+    } else {
+        return { status: 'red', text: 'Expirada' };
     }
 }
 
-/* Client list */
-#clientList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    padding: 20px;
+// Função para formatar datas no padrão dd/mm/yyyy
+function formatDate(dateString) {
+    const date = new Date(dateString + 'T00:00:00');
+    if (isNaN(date)) return "Data inválida";
+
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
 }
 
-.client {
-    background-color: #1a1a1a;
-    padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+
+// Função para calcular e exibir os totais bruto e limpo
+function updateTotals(clients) {
+    let totalBruto = 0;
+    let totalLimpo = 0;
+
+    clients.forEach(client => {
+        const bruto = parseFloat(client.valor_bruto.replace("R$", "").replace(".", "").replace(",", ".").trim());
+        const limpo = parseFloat(client.valor_limpo.replace("R$", "").replace(".", "").replace(",", ".").trim());
+
+        totalBruto += bruto;
+        totalLimpo += limpo;
+    });
+
+    document.getElementById("totalBruto").textContent = `Valor Bruto Total: R$ ${totalBruto.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    document.getElementById("totalLimpo").textContent = `Valor Limpo Total: R$ ${totalLimpo.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
 }
 
-.client:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+// Função para carregar e exibir os clientes
+function displayClients(clients) {
+    const clientList = document.getElementById("clientList");
+    clientList.innerHTML = '';
+
+    clients.forEach(client => {
+        const timeSinceInstall = calculateTimeSince(client.data_instalacao);
+        const warrantyStatus = calculateWarrantyStatus(client.garantia_inicio);
+
+        const clientDiv = document.createElement("div");
+        clientDiv.classList.add("client");
+        clientDiv.innerHTML = 
+        `<div class="client-name">${client.nome}</div>
+        <div>
+            <div class="client-time">Tempo Total da Instalação: ${timeSinceInstall}</div>
+            <div class="client-time ${warrantyStatus.status}">Garantia: ${warrantyStatus.text}</div>
+            <div>Data de Instalação: ${formatDate(client.data_instalacao)}</div>
+        </div>`;
+
+        clientDiv.addEventListener("click", () => showClientDetails(client));
+        clientList.appendChild(clientDiv);
+    });
+
+    // Atualizar os totais
+    updateTotals(clients);
 }
 
-.client-name {
-    font-size: 1.2em;
-    margin-bottom: 10px;
+// Função para exibir os detalhes de um cliente
+function showClientDetails(client) {
+    const clientDetails = document.getElementById("clientDetails");
+    const clientDetailsContent = document.getElementById("clientDetailsContent");
+
+    clientDetailsContent.innerHTML = 
+    `<h2>Detalhes de ${client.nome}</h2>
+    <p><strong>Data de Instalação:</strong> ${formatDate(client.data_instalacao)}</p>
+    <p><strong>Início da Garantia:</strong> ${formatDate(client.garantia_inicio)}</p>
+    <p><strong>Endereço:</strong> ${client.endereco}</p>
+    <p><strong>Contrato:</strong> <a href="${client.contrato_url}" target="_blank">Visualizar Contrato</a></p>
+    <p><strong>Tempo de Instalação:</strong> ${calculateTimeSince(client.data_instalacao)}</p>
+    <p><strong>Status da Garantia:</strong> ${calculateWarrantyStatus(client.garantia_inicio).text}</p>
+    <p><strong>Valor Bruto:</strong> ${client.valor_bruto}</p>
+    <p><strong>Valor Limpo:</strong> ${client.valor_limpo}</p>
+    <p><strong>WhatsApp:</strong> <a href="${client.WhatsApp}" target="_blank">Clique aqui para abrir no WhatsApp</a></p>`;
+
+    clientDetails.classList.add("show");
+    document.body.style.overflow = "hidden";
 }
 
-.client-time {
-    font-size: 1em;
+// Fechar o modal clicando fora dele (opcional)
+document.getElementById("clientDetails").addEventListener("click", (event) => {
+    if (event.target === document.getElementById("clientDetails")) {
+        closeClientDetails();
+    }
+});
+
+// Função para fechar o modal
+function closeClientDetails() {
+    const clientDetails = document.getElementById("clientDetails");
+    clientDetails.classList.remove("show");
+    document.body.style.overflow = "auto";
 }
 
-.client-time.green {
-    color: green;
-}
+// Função para filtrar e ordenar os dados
+function filterClients() {
+    const filterValue = document.getElementById("filterSelect").value;
 
-.client-time.red {
-    color: red;
-}
+    let filteredClients = [...clients];  // Copiar a lista original de clientes
 
-/* Modal de detalhes */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal.show {
-    display: flex;
-}
-
-.modal-content {
-    background-color: #333;
-    padding: 30px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 600px;
-    position: relative;
-    color: #fff;
-}
-
-/* Footer */
-footer {
-    background-color: #222;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    font-size: 0.9em;
-    border-top: 2px solid #e50914;
-}
-
-@media (max-width: 600px) {
-    header {
-        flex-direction: column;
-        align-items: center;
+    if (filterValue === 'installationRecent') {
+        // Ordenar pela instalação mais recente
+        filteredClients.sort((a, b) => new Date(b.data_instalacao) - new Date(a.data_instalacao));
+    } else if (filterValue === 'warrantyExpiring') {
+        // Organizar garantia
+        filteredClients.sort((a, b) => {
+            const warrantyA = calculateWarrantyStatus(a.garantia_inicio);
+            const warrantyB = calculateWarrantyStatus(b.garantia_inicio);
+            
+            // Garantias válidas primeiro
+            if (warrantyA.status === 'green' && warrantyB.status === 'red') return -1;
+            if (warrantyA.status === 'red' && warrantyB.status === 'green') return 1;
+            
+            // Se ambos são válidos ou expirados, ordenar por data de vencimento da garantia
+            return new Date(a.garantia_inicio) - new Date(b.garantia_inicio);
+        });
     }
 
-    footer {
-        font-size: 0.8em;
-    }
+    displayClients(filteredClients);
+}
+// Função para buscar clientes pelo nome
+function searchClients() {
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
+
+    // Filtrar clientes com base no termo de busca
+    const filteredClients = clients.filter(client =>
+        client.nome.toLowerCase().includes(searchTerm)
+    );
+
+    // Exibir os clientes filtrados
+    displayClients(filteredClients);
 }
 
-/* Definir layout base para manter o footer no final */
-html, body {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+// Adicionar evento ao campo de pesquisa
+document.getElementById("searchInput").addEventListener("input", searchClients);
+// Função para inicializar a página
+function initializePage() {
+    fetch('dados.json')
+        .then(response => response.json())
+        .then(data => {
+            clients = data;  // Armazenar dados no array global
+            displayClients(clients);
+        })
+        .catch(error => {
+            console.error('Erro ao carregar os dados:', error);
+        });
 }
 
-main {
-    flex: 1;
-    padding: 20px;
-}
-/* Linha de separação no modal de detalhes */
-.modal-content h2 {
-    border-bottom: 2px solid #e50914;
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
+// Eventos
+document.getElementById("filterSelect").addEventListener("change", filterClients);
 
-/* Estilo para links no modal */
-.modal-content a {
-    color: #e50914;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s;
-}
-
-.modal-content a:hover {
-    color: #ff6161;
-    text-decoration: underline;
-}
+// Inicializar a página
+initializePage();
