@@ -1,18 +1,19 @@
 let clients = [];  // Armazenar os clientes carregados
 
 // Função para calcular o tempo em anos e dias desde uma data
+// Função para calcular o tempo em anos e dias desde uma data
 function calculateTimeSince(date) {
     const startDate = new Date(date);
     const today = new Date();
-
+    today.setHours(0, 0, 0, 0); // Ignorar horas para cálculos precisos
     if (isNaN(startDate)) return "Data inválida";
 
     const diffTime = today - startDate;
-    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); // Total de dias
 
-    const years = Math.floor(totalDays / 365); 
-    const days = totalDays % 365;
-    
+    const years = Math.floor(totalDays / 365); // Anos inteiros
+    const days = totalDays % 365; // Dias restantes
+
     let result = `${years} ano${years !== 1 ? 's' : ''}`;
     if (days > 0) {
         result += ` e ${days} dia${days !== 1 ? 's' : ''}`;
@@ -24,11 +25,12 @@ function calculateTimeSince(date) {
 // Função para calcular o status da garantia
 function calculateWarrantyStatus(garantiaInicio) {
     const today = new Date();
+    today.setHours(0, 0, 0, 0); // Ignorar horas para cálculos precisos
     const startWarrantyDate = new Date(garantiaInicio);
 
     if (isNaN(startWarrantyDate)) return { status: 'red', text: 'Data inválida' };
 
-    const warrantyDuration = 365; // Garantia em dias
+    const warrantyDuration = 365; // Garantia padrão em dias
     const diffTime = today - startWarrantyDate;
     const daysSinceWarrantyStart = Math.floor(diffTime / (1000 * 60 * 60 * 24));
     const daysLeft = warrantyDuration - daysSinceWarrantyStart;
@@ -51,6 +53,7 @@ function formatDate(dateString) {
 
     return `${day}/${month}/${year}`;
 }
+
 
 // Função para calcular e exibir os totais bruto e limpo
 function updateTotals(clients) {
