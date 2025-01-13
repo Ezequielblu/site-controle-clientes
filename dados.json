@@ -38,5 +38,15 @@
     "contrato_url": "https://ezetechblumenau.netlify.app/admin.png",
     "valor_bruto": "R$ 5.000",
     "valor_limpo": "R$ 2.500"
+  },
+  {
+    "nome": "Joseiel",
+    "WhatsApp": "https://wa.me/5547991919191",
+    "data_instalacao": "2025-01-12",
+    "garantia_inicio": "2025-01-12",
+    "endereco": "R. teste",
+    "contrato_url": "https://ezetechblumenau.netlify.app/admin.png",
+    "valor_bruto": "R$ 1",
+    "valor_limpo": "R$ 1"
   }
 ]
