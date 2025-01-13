@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ezetech - Controle de Clientes</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="respons540720.css" media="(max-width: 540px) and (max-height: 720px)">
+
+
 </head>
 <body>
 
@@ -17,9 +20,7 @@
             </div>
         </div>
         <div id="header-controls">
-            <div id="search-container">
-                <input type="text" id="searchInput" placeholder="Pesquisar cliente...">
-            </div>
+
             <div id="filters">
                 <label for="filterSelect">Filtrar:</label>
                 <select id="filterSelect">
@@ -27,6 +28,9 @@
                     <option value="installationRecent">Instalação Mais Recente</option>
                     <option value="warrantyExpiring">Garantia Mais Perto de Vencer</option>
                 </select>
+            </div>
+            <div id="search-container">
+                <input type="text" id="searchInput" placeholder="Pesquisar cliente...">
             </div>
             <a href="admin.html" id="adminButton">Admin</a>
         </div>
