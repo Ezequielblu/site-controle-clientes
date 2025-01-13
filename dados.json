@@ -48,5 +48,15 @@
     "contrato_url": "https://ezetechblumenau.netlify.app/admin.png",
     "valor_bruto": "R$ 1",
     "valor_limpo": "R$ 1"
+  },
+  {
+    "nome": "Lopes",
+    "WhatsApp": "https://wa.me/5547991096167",
+    "data_instalacao": "2025-01-13",
+    "garantia_inicio": "2025-01-13",
+    "endereco": "R",
+    "contrato_url": "https://ezetechblumenau.netlify.app/admin.png",
+    "valor_bruto": "R$ 1.000",
+    "valor_limpo": "R$ 1.000"
   }
 ]
