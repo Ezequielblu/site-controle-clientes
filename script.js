@@ -157,7 +157,21 @@ function filterClients() {
 
     displayClients(filteredClients);
 }
+// Função para buscar clientes pelo nome
+function searchClients() {
+    const searchTerm = document.getElementById("searchInput").value.toLowerCase().trim();
 
+    // Filtrar clientes com base no termo de busca
+    const filteredClients = clients.filter(client =>
+        client.nome.toLowerCase().includes(searchTerm)
+    );
+
+    // Exibir os clientes filtrados
+    displayClients(filteredClients);
+}
+
+// Adicionar evento ao campo de pesquisa
+document.getElementById("searchInput").addEventListener("input", searchClients);
 // Função para inicializar a página
 function initializePage() {
     fetch('dados.json')
